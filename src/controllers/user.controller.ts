@@ -2,6 +2,7 @@ import {Controller , Get , Post , Put , Delete , Body , Param } from '@nestjs/co
 import {InjectRepository} from '@nestjs/typeorm';
 import {Repository} from 'typeorm';
 import {User} from '../entities/user.entity';
+import { FindOneOptions } from 'typeorm';
 
 @Controller('user')
 export class UserController {
@@ -16,7 +17,7 @@ export class UserController {
 
        @Get (':id') 
        async findUserById(@Param('id') id: any): Promise<User> {
-              return await this.userRepository.findOne(id);
+              return await this.userRepository.findOneById(id);
        }
 
        @Post () 
@@ -29,7 +30,7 @@ export class UserController {
        @Put (':id') 
        async updateUser(@Param('id') id: any, @Body() user: User): Promise<User> {
               await this.userRepository.update(id, user);
-              return await this.userRepository.findOne(id);
+              return await this.userRepository.findOneById(id);
        }
        @Delete(':id')
        async deleteUser(@Param('id') id: number): Promise<void> {
